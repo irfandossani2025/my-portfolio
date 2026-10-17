@@ -7,6 +7,10 @@ return [
         'model' => env('ANTHROPIC_MODEL', 'claude-sonnet-4-5-20250929'),
     ],
 
+    'jarvis' => [
+        'lead_recipient' => env('JARVIS_LEAD_RECIPIENT', 'idossani@cloudandvps.com'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

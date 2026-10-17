@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JarvisLeadMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class JarvisController extends Controller
 {
@@ -83,6 +85,34 @@ PROMPT;
 
             return response()->json([
                 'message' => 'Jarvis is temporarily unavailable. Please try again shortly.',
+            ], 502);
+        }
+    }
+
+    public function handoff(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'min:2', 'max:120'],
+            'email' => ['required', 'email:rfc', 'max:254'],
+            'phone' => ['required', 'string', 'min:6', 'max:50'],
+            'question' => ['required', 'string', 'min:2', 'max:800'],
+            'summary' => ['required', 'string', 'min:2', 'max:5000'],
+            'consent' => ['accepted'],
+            'website' => ['nullable', 'max:0'],
+        ]);
+
+        try {
+            Mail::to(config('services.jarvis.lead_recipient'))
+                ->send(new JarvisLeadMail($validated, now()));
+
+            return response()->json([
+                'message' => 'Your project brief has been sent to Irfan. He will review the details and reply using the contact information you provided.',
+            ]);
+        } catch (\Throwable $exception) {
+            Log::warning('Jarvis lead email could not be sent.', ['exception' => $exception->getMessage()]);
+
+            return response()->json([
+                'message' => 'Your brief could not be sent just now. Please try again or contact Irfan directly by WhatsApp or email.',
             ], 502);
         }
     }

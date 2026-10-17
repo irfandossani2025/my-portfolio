@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Mail\JarvisLeadMail;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class JarvisControllerTest extends TestCase
@@ -44,5 +46,47 @@ class JarvisControllerTest extends TestCase
             ->assertJsonPath('configured', false);
 
         Http::assertNothingSent();
+    }
+
+    public function test_a_visitor_can_consent_to_email_their_jarvis_brief_to_irfan(): void
+    {
+        config()->set('services.jarvis.lead_recipient', 'irfan@example.test');
+        Mail::fake();
+
+        $this->postJson(route('jarvis.handoff'), [
+            'name' => 'Aisha Al Balushi',
+            'email' => 'aisha@example.test',
+            'phone' => '+968 9000 0000',
+            'question' => 'How can we market our restaurant opening?',
+            'summary' => 'Launch with teaser content and a reservation flow.',
+            'consent' => true,
+            'website' => '',
+        ])->assertOk()
+            ->assertJsonPath('message', 'Your project brief has been sent to Irfan. He will review the details and reply using the contact information you provided.');
+
+        Mail::assertSent(JarvisLeadMail::class, function (JarvisLeadMail $mail) {
+            $envelope = $mail->envelope();
+
+            return $mail->hasTo('irfan@example.test')
+                && $envelope->subject === 'New Jarvis lead: Aisha Al Balushi'
+                && $envelope->replyTo[0]->address === 'aisha@example.test';
+        });
+    }
+
+    public function test_a_jarvis_brief_requires_explicit_consent(): void
+    {
+        Mail::fake();
+
+        $this->postJson(route('jarvis.handoff'), [
+            'name' => 'Aisha Al Balushi',
+            'email' => 'aisha@example.test',
+            'phone' => '+968 9000 0000',
+            'question' => 'How can we market our restaurant opening?',
+            'summary' => 'Launch with teaser content and a reservation flow.',
+            'consent' => false,
+        ])->assertUnprocessable()
+            ->assertJsonValidationErrors('consent');
+
+        Mail::assertNothingSent();
     }
 }
