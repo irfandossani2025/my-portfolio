@@ -26,7 +26,11 @@ class JarvisControllerTest extends TestCase
         Http::assertSent(function ($request) {
             return $request->url() === 'https://api.anthropic.com/v1/messages'
                 && $request->hasHeader('x-api-key', 'test-key')
-                && $request['model'] === 'test-model';
+                && $request['model'] === 'test-model'
+                && str_contains($request['system'], 'marketing, branding, websites, web applications, AI solutions')
+                && str_contains($request['system'], '+968 7505 4024')
+                && str_contains($request['system'], 'idossani@cloudandvps.com')
+                && str_contains($request['system'], 'cannot send messages, store leads, or notify Irfan');
         });
     }
 
