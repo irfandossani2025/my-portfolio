@@ -1,14 +1,75 @@
-const header=document.querySelector('header');
-document.querySelector('.menu')?.addEventListener('click',()=>header.classList.toggle('open'));
-document.querySelectorAll('nav a').forEach(link=>link.addEventListener('click',()=>header.classList.remove('open')));
-const observer=new IntersectionObserver(items=>items.forEach(item=>{if(item.isIntersecting){item.target.classList.add('visible');observer.unobserve(item.target)}}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(item=>observer.observe(item));
-const answers={restaurant:'For a restaurant: a premium brand identity, conversion-focused menu site, reservation or enquiry flow, WhatsApp connection, and an AI assistant that answers common guest questions.',ai:'The AI work is practical: Jarvis-style assistants, lead capture, AI content workflows and business automation. The right solution starts with what your team needs to make easier.',website:'A website project begins with clarity — goals, audience, offer and content. Then the strategy, visual system and build move together, giving you one accountable creative and technical lead.'};
-const response=document.querySelector('.assistant-message');
-let lastJarvisQuestion='';
-const askJarvis=async(message,fallback)=>{lastJarvisQuestion=message;response.classList.add('typing');response.textContent='Jarvis is thinking…';try{const result=await fetch('/jarvis/respond',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json','X-CSRF-TOKEN':document.querySelector('meta[name="csrf-token"]')?.content||''},body:JSON.stringify({message})});const data=await result.json();response.textContent=data.message||fallback}catch(error){response.textContent=fallback}finally{response.classList.remove('typing')}};
-document.querySelectorAll('[data-answer]').forEach(button=>button.addEventListener('click',()=>askJarvis(button.textContent,answers[button.dataset.answer])));
-document.querySelector('.assistant-form')?.addEventListener('submit',event=>{event.preventDefault();const input=event.currentTarget.elements.question;const message=input.value.trim();if(!message)return;askJarvis(message,'Jarvis could not prepare a response just now. Please contact Irfan on WhatsApp or email to continue.');input.value=''});
-document.querySelector('.lead-form')?.addEventListener('submit',async event=>{event.preventDefault();const form=event.currentTarget;const status=form.querySelector('.lead-status');if(!lastJarvisQuestion||response.classList.contains('typing')){status.textContent='Ask Jarvis a question first, then send the resulting brief.';return}const submit=form.querySelector('button[type="submit"]');const payload=Object.fromEntries(new FormData(form));payload.question=lastJarvisQuestion;payload.summary=response.textContent.trim();payload.consent=form.elements.consent.checked;submit.disabled=true;status.textContent='Sending your brief…';try{const result=await fetch('/jarvis/handoff',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json','X-CSRF-TOKEN':document.querySelector('meta[name="csrf-token"]')?.content||''},body:JSON.stringify(payload)});const data=await result.json();status.textContent=data.message||'Your brief could not be sent just now.';if(result.ok)form.reset()}catch(error){status.textContent='Your brief could not be sent just now. Please try again or contact Irfan directly.'}finally{submit.disabled=false}});
-const canvas=document.querySelector('#starfield');
-if(canvas&&window.matchMedia('(prefers-reduced-motion: no-preference)').matches){const context=canvas.getContext('2d');let points=[];let pointer={x:-100,y:-100};const resize=()=>{canvas.width=window.innerWidth*devicePixelRatio;canvas.height=window.innerHeight*devicePixelRatio;context.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);points=Array.from({length:Math.min(70,Math.round(window.innerWidth/20))},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16,r:Math.random()*1.1+.25}))};const draw=()=>{context.clearRect(0,0,window.innerWidth,window.innerHeight);points.forEach(point=>{point.x+=point.vx;point.y+=point.vy;if(point.x<0||point.x>window.innerWidth)point.vx*=-1;if(point.y<0||point.y>window.innerHeight)point.vy*=-1;const distance=Math.hypot(point.x-pointer.x,point.y-pointer.y);context.fillStyle=distance<150?'rgba(201,255,66,.76)':'rgba(155,123,255,.32)';context.beginPath();context.arc(point.x,point.y,point.r,0,Math.PI*2);context.fill()});requestAnimationFrame(draw)};window.addEventListener('resize',resize);window.addEventListener('pointermove',event=>pointer={x:event.clientX,y:event.clientY});resize();draw()}
+const response = document.querySelector('.assistant-message');
+let lastIrfanTwoQuestion = '';
+
+const askIrfanTwo = async (message, fallback) => {
+    lastIrfanTwoQuestion = message;
+    response.classList.add('typing');
+    response.textContent = 'Irfan 2.0 is thinking…';
+
+    try {
+        const result = await fetch('/jarvis/respond', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+            body: JSON.stringify({ message }),
+        });
+        const data = await result.json();
+        response.textContent = data.message || fallback;
+    } catch (error) {
+        response.textContent = fallback;
+    } finally {
+        response.classList.remove('typing');
+    }
+};
+
+document.querySelector('.assistant-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const input = event.currentTarget.elements.question;
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    askIrfanTwo(message, 'Irfan 2.0 could not prepare a response just now. Please contact Irfan by email or WhatsApp to continue.');
+    input.value = '';
+});
+
+document.querySelector('.lead-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const status = form.querySelector('.lead-status');
+
+    if (!lastIrfanTwoQuestion || response.classList.contains('typing')) {
+        status.textContent = 'Ask Irfan 2.0 a question first, then send the resulting brief.';
+        return;
+    }
+
+    const submit = form.querySelector('button[type="submit"]');
+    const payload = Object.fromEntries(new FormData(form));
+    payload.question = lastIrfanTwoQuestion;
+    payload.summary = response.textContent.trim();
+    payload.consent = form.elements.consent.checked;
+    submit.disabled = true;
+    status.textContent = 'Sending your brief…';
+
+    try {
+        const result = await fetch('/jarvis/handoff', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+            body: JSON.stringify(payload),
+        });
+        const data = await result.json();
+        status.textContent = data.message || 'Your brief could not be sent just now.';
+        if (result.ok) form.reset();
+    } catch (error) {
+        status.textContent = 'Your brief could not be sent just now. Please try again or contact Irfan directly.';
+    } finally {
+        submit.disabled = false;
+    }
+});
