@@ -11,6 +11,6 @@ class PortfolioPageTest extends TestCase
         $this->get('/')
             ->assertOk()
             ->assertSee('Irfan Shiraj Dossani')
-            ->assertSee('Design with');
+            ->assertSee('I make businesses');
     }
 }
