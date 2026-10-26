@@ -35,7 +35,6 @@ document.querySelector('.assistant-form')?.addEventListener('submit', (event) =>
     askIrfanTwo(message, 'Irfan 2.0 could not prepare a response just now. Please contact Irfan by email or WhatsApp to continue.');
     input.value = '';
 });
-
 document.querySelector('.lead-form')?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -73,34 +72,3 @@ document.querySelector('.lead-form')?.addEventListener('submit', async (event) =
         submit.disabled = false;
     }
 });
-
-const guideDock = document.querySelector('.guide-dock');
-const guideCopy = guideDock?.querySelector('span');
-const guideStops = [
-    ['#about', 'Here is the thinking behind the work.'],
-    ['#work', 'These are a few projects I helped shape.'],
-    ['#services', 'This is how strategy, design and technology connect.'],
-    ['#irfan-two', 'Now ask me about your own next move.'],
-    ['#contact', 'When you are ready, let’s make it count.'],
-];
-
-if (guideDock && guideCopy) {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        guideDock.classList.add('visible');
-    } else {
-        window.setTimeout(() => guideDock.classList.add('visible'), 900);
-    }
-    const guideObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) guideCopy.textContent = entry.target.dataset.guideMessage;
-        });
-    }, { threshold: 0.5 });
-
-    guideStops.forEach(([selector, message]) => {
-        const section = document.querySelector(selector);
-        if (section) {
-            section.dataset.guideMessage = message;
-            guideObserver.observe(section);
-        }
-    });
-}
