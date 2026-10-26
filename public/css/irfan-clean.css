@@ -40,6 +40,9 @@ header { background: rgba(247,244,238,.94); border-bottom: 1px solid var(--line)
 .wallet .phone { position: relative; width: min(100%, 470px); height: auto; aspect-ratio: 1.64; padding: 0; border: 0; border-radius: 3px; background: #132752 url('../images/projects/ewallet-live.png') center / cover no-repeat; box-shadow: none; }
 .wallet .phone > * { display: none; }
 .wallet .phone::after { content: 'LIVE WEBSITE · EWALLET.APP'; position: absolute; left: 0; bottom: 0; padding: 10px 13px; background: rgba(23,43,58,.92); color: #fff; font: 9px 'DM Mono', monospace; letter-spacing: .1em; }
+.dreams .screen { position: relative; min-height: 0; padding: 0; overflow: hidden; background: #102e2f url('../images/projects/arabian-dreams-live.png') center / cover no-repeat; }
+.dreams .screen > * { display: none; }
+.dreams .screen::after { content: 'LIVE WEBSITE · ARABIANDREAMTOURS.COM'; position: absolute; left: 0; bottom: 0; padding: 10px 13px; background: rgba(23,43,58,.92); color: #fff; font: 9px 'DM Mono', monospace; letter-spacing: .1em; }
 .services { background: var(--ink); }
 .service-list article { border-color: rgba(255,255,255,.2); }
 .irfan-two { background: #e9e3d8; }

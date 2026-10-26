@@ -72,3 +72,6 @@ document.querySelector('.lead-form')?.addEventListener('submit', async (event) =
         submit.disabled = false;
     }
 });
+
+const arabianDreamsLink = document.querySelector('a[href="https://arabiandreamstours.com"]');
+if (arabianDreamsLink) arabianDreamsLink.href = 'https://arabiandreamtours.com';
