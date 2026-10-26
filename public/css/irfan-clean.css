@@ -16,9 +16,27 @@ header { background: rgba(247,244,238,.94); border-bottom: 1px solid var(--line)
 .guide-line p { font-size: clamp(16px,2.1vw,28px); letter-spacing: -.04em; }
 .intro, .work, .services, .irfan-two, .quote, .contact { border-radius: 0; }
 .intro { padding-top: clamp(82px,12vw,172px); padding-bottom: clamp(82px,12vw,172px); }
+.credentials { display: grid; grid-template-columns: .75fr 1.25fr; gap: clamp(32px,8vw,120px); align-items: start; padding: clamp(70px,9vw,125px) clamp(20px,5vw,84px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #e9e3d8; }
+.credentials h2 { margin: 18px 0 0; font: clamp(46px,5.3vw,80px)/.94 'DM Serif Display', Georgia, serif; letter-spacing: -.065em; }
+.credentials h2 em { color: var(--accent); }
+.credentials-content { display: grid; gap: 14px; }
+.resume-card { display: flex; min-height: 270px; padding: 24px; flex-direction: column; justify-content: space-between; background: var(--ink); color: #fff; text-decoration: none; transition: transform .25s ease, background .25s ease; }
+.resume-card:hover { background: #274557; transform: translateY(-5px); }
+.resume-card span, .resume-card small { font: 10px 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+.resume-card b { font: clamp(34px,4vw,56px)/.88 'DM Serif Display', Georgia, serif; letter-spacing: -.06em; }
+.resume-card i { color: var(--accent); font-size: 17px; font-style: normal; }
+.credential-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; border: 1px solid var(--line); background: var(--line); }
+.credential-grid article { min-height: 150px; display: flex; flex-direction: column; justify-content: space-between; padding: 17px; background: #f7f4ee; }
+.credential-grid small { font: 9px 'DM Mono', monospace; letter-spacing: .09em; text-transform: uppercase; color: #56636c; }
+.credential-grid h3 { margin: 15px 0 4px; font: clamp(24px,2.4vw,36px)/.95 'DM Serif Display', Georgia, serif; letter-spacing: -.055em; }
+.credential-grid h3 em { color: var(--accent); font-style: italic; }
+.credential-grid p { margin: 0; color: #56636c; font-size: 12px; }
 .work { background: #fff; padding-top: clamp(82px,11vw,156px); }
 .case { padding-block: clamp(66px,10vw,130px); border-color: var(--line); }
 .screen, .phone { box-shadow: none; border-radius: 3px; }
+.live-capture { position: relative; display: block; min-height: 0; padding: 0; overflow: hidden; background: var(--ink); }
+.live-capture img { display: block; width: 100%; height: auto; }
+.live-capture span { position: absolute; left: 0; bottom: 0; padding: 10px 13px; background: rgba(23,43,58,.92); color: #fff; font: 9px 'DM Mono', monospace; letter-spacing: .1em; }
 .services { background: var(--ink); }
 .service-list article { border-color: rgba(255,255,255,.2); }
 .irfan-two { background: #e9e3d8; }
@@ -28,6 +46,6 @@ header { background: rgba(247,244,238,.94); border-bottom: 1px solid var(--line)
 .contact-mark { align-self: center; width: min(30vw,320px); aspect-ratio: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 26px; background: var(--ink); color: #fff; font-family: 'DM Mono', monospace; font-size: clamp(18px,2vw,26px); line-height: 1.05; letter-spacing: -.07em; }
 .contact-mark b { align-self: flex-end; color: var(--accent); font-size: clamp(32px,4vw,54px); line-height: .7; }
 footer { background: var(--ink); }
-@media (max-width: 900px) { .hero { min-height: auto; } .hero-stage { min-height: 500px; } .guide-avatar { right: -12%; height: 100%; } @keyframes irfan-walk-in { 0% { opacity: 0; right: -58%; } 60% { opacity: 1; } 100% { opacity: 1; right: -12%; } } .contact-mark { width: 190px; } }
-@media (max-width: 620px) { .hero { padding-top: 35px; } .hero-stage { min-height: 430px; } .guide-avatar { right: -27%; height: 100%; } @keyframes irfan-walk-in { 0% { opacity: 0; right: -78%; } 60% { opacity: 1; } 100% { opacity: 1; right: -27%; } } .guide-line { padding-inline: 20px; } .guide-line span { display: none; } .contact { grid-template-columns: 1fr; } .contact-mark { width: 150px; } }
+@media (max-width: 900px) { .hero { min-height: auto; } .hero-stage { min-height: 500px; } .guide-avatar { right: -12%; height: 100%; } .credentials { grid-template-columns: 1fr; } @keyframes irfan-walk-in { 0% { opacity: 0; right: -58%; } 60% { opacity: 1; } 100% { opacity: 1; right: -12%; } } .contact-mark { width: 190px; } }
+@media (max-width: 620px) { .hero { padding-top: 35px; } .hero-stage { min-height: 430px; } .guide-avatar { right: -27%; height: 100%; } .credentials { padding-top: 64px; padding-bottom: 64px; } .resume-card { min-height: 220px; } .credential-grid { grid-template-columns: 1fr; } .credential-grid article { min-height: 120px; } @keyframes irfan-walk-in { 0% { opacity: 0; right: -78%; } 60% { opacity: 1; } 100% { opacity: 1; right: -27%; } } .guide-line { padding-inline: 20px; } .guide-line span { display: none; } .contact { grid-template-columns: 1fr; } .contact-mark { width: 150px; } }
 @media (prefers-reduced-motion: reduce) { .guide-avatar { animation: none; } }
