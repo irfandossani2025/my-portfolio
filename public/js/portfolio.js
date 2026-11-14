@@ -75,3 +75,33 @@ document.querySelector('.lead-form')?.addEventListener('submit', async (event) =
 
 const arabianDreamsLink = document.querySelector('a[href="https://arabiandreamstours.com"]');
 if (arabianDreamsLink) arabianDreamsLink.href = 'https://arabiandreamtours.com';
+
+const orbit = document.querySelector('[data-project-orbit]');
+if (orbit) {
+    const cards = [...orbit.querySelectorAll('[data-project-card]')];
+    const count = orbit.querySelector('[data-orbit-count]');
+    let active = 0;
+    const placements = [
+        ['translate(-50%,-50%) translate3d(0,0,90px) rotateY(0)', '1', '3'],
+        ['translate(-50%,-50%) translate3d(28%,3%,0) rotateY(-26deg) scale(.84)', '.7', '2'],
+        ['translate(-50%,-50%) translate3d(-28%,3%,0) rotateY(26deg) scale(.84)', '.7', '1'],
+    ];
+    const renderOrbit = () => {
+        cards.forEach((card, index) => {
+            const position = (index - active + cards.length) % cards.length;
+            const [transform, opacity, zIndex] = placements[position];
+            card.style.transform = transform;
+            card.style.opacity = opacity;
+            card.style.zIndex = zIndex;
+            card.classList.toggle('is-active', index === active);
+            card.tabIndex = index === active ? 0 : -1;
+        });
+        count.textContent = `${String(active + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+    };
+    const move = (direction) => { active = (active + direction + cards.length) % cards.length; renderOrbit(); };
+    orbit.querySelector('[data-orbit-prev]').addEventListener('click', () => move(-1));
+    orbit.querySelector('[data-orbit-next]').addEventListener('click', () => move(1));
+    cards.forEach((card, index) => card.addEventListener('click', (event) => { if (index !== active) { event.preventDefault(); active = index; renderOrbit(); } }));
+    orbit.addEventListener('keydown', (event) => { if (event.key === 'ArrowLeft') move(-1); if (event.key === 'ArrowRight') move(1); });
+    renderOrbit();
+}

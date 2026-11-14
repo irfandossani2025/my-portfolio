@@ -14,4 +14,13 @@ class PortfolioPageTest extends TestCase
             ->assertSee('Make your business')
             ->assertSee('IRFAN 2.0');
     }
+
+    public function test_each_selected_project_has_a_case_study_page(): void
+    {
+        foreach (['safety-mart-online', 'arabian-dreams-tours', 'ewallet-app'] as $project) {
+            $this->get('/projects/'.$project)
+                ->assertOk()
+                ->assertSee('LIVE PROJECT CAPTURE');
+        }
+    }
 }
