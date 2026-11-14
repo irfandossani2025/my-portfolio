@@ -76,6 +76,16 @@ document.querySelector('.lead-form')?.addEventListener('submit', async (event) =
 const arabianDreamsLink = document.querySelector('a[href="https://arabiandreamstours.com"]');
 if (arabianDreamsLink) arabianDreamsLink.href = 'https://arabiandreamtours.com';
 
+document.querySelectorAll('[data-archive-prompt]').forEach((prompt) => {
+    prompt.addEventListener('click', () => {
+        const input = document.querySelector('#jarvis-question');
+        if (!input) return;
+
+        input.value = prompt.dataset.archivePrompt;
+        input.focus();
+    });
+});
+
 const orbit = document.querySelector('[data-project-orbit]');
 if (orbit) {
     const cards = [...orbit.querySelectorAll('[data-project-card]')];
