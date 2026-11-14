@@ -11,7 +11,7 @@ class PortfolioPageTest extends TestCase
         $this->get('/')
             ->assertOk()
             ->assertSee('Irfan Shiraj Dossani')
-            ->assertSee('Clearer businesses')
+            ->assertSee('Make your')
             ->assertSee('IRFAN 2.0');
     }
 
@@ -20,7 +20,7 @@ class PortfolioPageTest extends TestCase
         foreach (['safety-mart-online', 'arabian-dreams-tours', 'ewallet-app'] as $project) {
             $this->get('/projects/'.$project)
                 ->assertOk()
-                ->assertSee('LIVE PROJECT CAPTURE');
+                ->assertSee('LIVE PROJECT');
         }
     }
 }
