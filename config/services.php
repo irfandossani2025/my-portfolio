@@ -8,7 +8,7 @@ return [
     ],
 
     'jarvis' => [
-        'lead_recipient' => env('JARVIS_LEAD_RECIPIENT', 'idossani@cloudandvps.com'),
+        'lead_recipient' => env('JARVIS_LEAD_RECIPIENT', 'info@irfandossani.com'),
     ],
 
     /*

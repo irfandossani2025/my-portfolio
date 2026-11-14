@@ -7,7 +7,7 @@ This file preserves reusable portfolio content while the public website is rebui
 - Name: Irfan Shiraj Dossani
 - Positioning: strategy, design, digital experiences, marketing, web products and practical AI
 - Location: Muscat, Oman; available worldwide
-- Email: idossani@cloudandvps.com
+- Email: info@irfandossani.com
 - WhatsApp: +968 7505 4024 (`https://wa.me/96875054024`)
 - Experience statement: more than 12 years across branding, digital marketing, web products, customer experience and practical AI
 

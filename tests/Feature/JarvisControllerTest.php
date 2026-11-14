@@ -31,7 +31,7 @@ class JarvisControllerTest extends TestCase
                 && $request['model'] === 'test-model'
                 && str_contains($request['system'], 'marketing, branding, websites, web applications, AI solutions')
                 && str_contains($request['system'], '+968 7505 4024')
-                && str_contains($request['system'], 'idossani@cloudandvps.com')
+                && str_contains($request['system'], 'info@irfandossani.com')
                 && str_contains($request['system'], 'cannot send messages, store leads, or notify Irfan');
         });
     }
